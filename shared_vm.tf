@@ -9,7 +9,7 @@
 # ---------------------------------------------------------------------------
 
 provider "google" {
-  project = "your-project-id"
+  project = "pipeline-health-mon-2026"
   region  = "us-central1"
   zone    = "us-central1-a"
 }
@@ -47,11 +47,11 @@ resource "google_compute_instance" "shared_vm" {
 # ---------------------------------------------------------------------------
 locals {
   users = [
-    "mpab28@gmail.com",
-    "person2@example.com",
-    "person3@example.com",
-    "person4@example.com",
-    "person5@example.com",
+    "marcelacostoff@gmail.com",
+    "jsteven.romeror@gmail.com",
+    "rey.raguilar@gmail.com",
+    "jcardona1983@gmail.com",
+    "adrianperezj@gmail.com",
   ]
 }
 
@@ -72,7 +72,7 @@ resource "google_compute_instance_iam_member" "os_admin" {
 # ---------------------------------------------------------------------------
 resource "google_project_iam_member" "instance_admin" {
   for_each = toset(local.users)
-  project  = "your-project-id"
+  project  = "pipeline-health-mon-2026"
   role     = "roles/compute.instanceAdmin.v1"
   member   = "user:${each.value}"
 }
@@ -82,7 +82,7 @@ resource "google_project_iam_member" "instance_admin" {
 # ---------------------------------------------------------------------------
 resource "google_project_iam_member" "iap_tunnel" {
   for_each = toset(local.users)
-  project  = "your-project-id"
+  project  = "pipeline-health-mon-2026"
   role     = "roles/iap.tunnelResourceAccessor"
   member   = "user:${each.value}"
 }
@@ -92,7 +92,7 @@ resource "google_project_iam_member" "iap_tunnel" {
 # ---------------------------------------------------------------------------
 resource "google_project_iam_member" "service_account_user" {
   for_each = toset(local.users)
-  project  = "your-project-id"
+  project  = "pipeline-health-mon-2026"
   role     = "roles/iam.serviceAccountUser"
   member   = "user:${each.value}"
 }
