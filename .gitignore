@@ -1,0 +1,55 @@
+# ---------------------------------------------------------------------------
+# Terraform
+# ---------------------------------------------------------------------------
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files (contain sensitive data — use remote backend instead)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Variable files that may contain secrets
+*.tfvars
+*.tfvars.json
+!example.tfvars
+!example.tfvars.json
+
+# CLI plan output
+*tfplan*
+
+# Override files — usually used for local experimentation
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Lock file is committed (keep); remove line below if you prefer not to commit it
+# .terraform.lock.hcl
+
+# ---------------------------------------------------------------------------
+# Cloud credentials / secrets
+# ---------------------------------------------------------------------------
+*.json.key
+service-account-*.json
+credentials.json
+gcp-key.json
+application_default_credentials.json
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------------------
+# OS / editor clutter
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
