@@ -34,6 +34,7 @@ override.tf.json
 # ---------------------------------------------------------------------------
 # Cloud credentials / secrets
 # ---------------------------------------------------------------------------
+infra/keys/
 *.json.key
 service-account-*.json
 credentials.json
