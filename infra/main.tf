@@ -63,6 +63,7 @@ resource "google_service_account_key" "pipeline_sa_key" {
 locals {
   sa_roles = [
     "roles/pubsub.subscriber",
+    "roles/pubsub.publisher",
     "roles/bigquery.dataEditor",
     "roles/storage.objectAdmin",
   ]
