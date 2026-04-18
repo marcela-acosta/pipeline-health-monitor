@@ -30,7 +30,7 @@ resource "google_compute_instance" "shared_vm" {
     enable-oslogin = "TRUE"
   }
 
-  metadata_startup_script = file("${path.module}/scripts/startup.sh")
+  metadata_startup_script = file("${path.module}/../../scripts/startup.sh")
 }
 
 # Grant the VM's default service account read access to the GitHub deploy key secret.
