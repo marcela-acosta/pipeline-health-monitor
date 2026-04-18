@@ -93,3 +93,8 @@ output "airflow_tunnel_command" {
   description = "Run locally to open Airflow UI at http://localhost:8080"
   value       = "gcloud compute start-iap-tunnel ${google_compute_instance.shared_vm.name} 8080 --local-host-port=localhost:8080 --zone=${google_compute_instance.shared_vm.zone}"
 }
+
+output "streamlit_url" {
+  description = "Public URL for the Streamlit dashboard (VM must be running)"
+  value       = "http://${google_compute_instance.shared_vm.network_interface[0].access_config[0].nat_ip}:8501"
+}

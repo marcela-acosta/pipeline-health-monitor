@@ -39,3 +39,18 @@ resource "google_compute_firewall" "allow_iap_airflow" {
 
   description = "Allow Airflow web UI tunneled through IAP"
 }
+
+# Allow public access to Streamlit dashboard (port 8501)
+resource "google_compute_firewall" "allow_streamlit" {
+  name    = "allow-streamlit"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["8501"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  description = "Allow public access to Streamlit dashboard on port 8501"
+}
