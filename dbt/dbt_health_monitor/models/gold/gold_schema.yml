@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: fct_pipeline_health
+    description: Daily pipeline health metrics by pipeline.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - pipeline_name
+            - event_date
+    columns:
+      - name: pipeline_name
+        tests:
+          - not_null
+      - name: event_date
+        tests:
+          - not_null
+      - name: total_runs
+        tests:
+          - not_null

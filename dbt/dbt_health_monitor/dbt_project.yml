@@ -1,0 +1,42 @@
+name: dbt_health_monitor
+version: 1.0.0
+config-version: 2
+
+profile: dbt_health_monitor
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  raw_dataset: "raw_health_monitor"
+
+models:
+  dbt_health_monitor:
+    +persist_docs:
+      relation: true
+      columns: true
+
+    bronze:
+      +schema: bronze
+      +materialized: view
+
+    silver:
+      +schema: silver
+      +materialized: table
+
+    gold:
+      +schema: gold
+      +materialized: table
+
+seeds:
+  dbt_health_monitor:
+    +schema: seeds

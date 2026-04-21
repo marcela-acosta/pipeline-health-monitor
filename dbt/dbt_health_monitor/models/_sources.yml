@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: health_monitor_raw
+    description: Raw ingestion tables for the pipeline health monitor.
+    database: "{{ target.project }}"
+    schema: "{{ var('raw_dataset') }}"
+    tables:
+      - name: pipeline_events
+        description: Incoming event stream for pipeline run status.
+        loaded_at_field: ingested_at
