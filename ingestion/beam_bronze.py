@@ -10,7 +10,9 @@ os.environ["CURL_CA_BUNDLE"] = CA_FILE
 os.environ["GRPC_DEFAULT_SSL_ROOTS_FILE_PATH"] = CA_FILE
 os.environ["GOOGLE_API_USE_CLIENT_CERTIFICATE"] = "false"
 
-ssl._create_default_https_context = lambda *args, **kwargs: ssl.create_default_context(cafile=CA_FILE)
+ssl._create_default_https_context = lambda *args, **kwargs: ssl.create_default_context(
+    cafile=CA_FILE
+)
 
 import json
 import logging
@@ -77,7 +79,8 @@ def run():
             | "ReadFromPubSub" >> beam.io.ReadFromPubSub(subscription=SUBSCRIPTION)
             | "ParseMessage" >> beam.Map(parse_message)
             | "FilterNulls" >> beam.Filter(lambda x: x is not None)
-            | "WriteToBigQuery" >> beam.io.WriteToBigQuery(
+            | "WriteToBigQuery"
+            >> beam.io.WriteToBigQuery(
                 table=BQ_TABLE,
                 schema=SCHEMA,
                 write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND,

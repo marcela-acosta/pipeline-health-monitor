@@ -48,5 +48,5 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
-*~.venv/
+.venv/
 key.json

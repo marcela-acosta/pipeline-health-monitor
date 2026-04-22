@@ -1,4 +1,3 @@
-
 import json
 import time
 import random
@@ -16,6 +15,7 @@ REGIONS = ["CDMX", "GDL", "MTY", "CUN", "TIJ"]
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path(PROJECT_ID, TOPIC_ID)
 
+
 def generate_event():
     return {
         "opportunity_id": str(uuid.uuid4()),
@@ -24,9 +24,12 @@ def generate_event():
         "product": random.choice(PRODUCTS),
         "value": round(random.uniform(500, 15000), 2),
         "region": random.choice(REGIONS),
-        "expected_close_date": (datetime.now() + timedelta(days=random.randint(7, 90))).isoformat(),
-        "updated_at": datetime.now().isoformat()
+        "expected_close_date": (
+            datetime.now() + timedelta(days=random.randint(7, 90))
+        ).isoformat(),
+        "updated_at": datetime.now().isoformat(),
     }
+
 
 while True:
     event = generate_event()
@@ -35,6 +38,8 @@ while True:
     future = publisher.publish(topic_path, message)
     message_id = future.result()
 
-    print(f"[OK] Published message_id={message_id} opportunity_id={event['opportunity_id']}")
-    
+    print(
+        f"[OK] Published message_id={message_id} opportunity_id={event['opportunity_id']}"
+    )
+
     time.sleep(60)

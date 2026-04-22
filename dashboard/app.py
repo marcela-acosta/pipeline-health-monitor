@@ -8,18 +8,18 @@ import streamlit as st
 USE_MOCK = os.environ.get("USE_MOCK", "true").lower() == "true"
 
 STAGE_ORDER = ["Prospecting", "Qualified", "Proposal", "Negotiation", "Won", "Lost"]
-REGIONS     = ["CDMX", "GDL", "MTY", "CUN", "TIJ"]
-PRODUCTS    = ["Flight", "Hotel", "Car Rental", "Package 2x", "Package 3x"]
-AGENTS      = [f"Agent {i:02d}" for i in range(1, 21)]
+REGIONS = ["CDMX", "GDL", "MTY", "CUN", "TIJ"]
+PRODUCTS = ["Flight", "Hotel", "Car Rental", "Package 2x", "Package 3x"]
+AGENTS = [f"Agent {i:02d}" for i in range(1, 21)]
 
 # Row counts per stage — realistic funnel shape
 STAGE_COUNTS = {
     "Prospecting": 120,
-    "Qualified":   85,
-    "Proposal":    52,
+    "Qualified": 85,
+    "Proposal": 52,
     "Negotiation": 30,
-    "Won":         18,
-    "Lost":        22,
+    "Won": 18,
+    "Lost": 22,
 }
 
 
@@ -28,13 +28,15 @@ def get_mock_data() -> pd.DataFrame:
     rows = []
     for stage, count in STAGE_COUNTS.items():
         for _ in range(count):
-            rows.append({
-                "stage":   stage,
-                "region":  rng.choice(REGIONS),
-                "product": rng.choice(PRODUCTS),
-                "agent":   rng.choice(AGENTS),
-                "value":   round(float(rng.uniform(500, 15000)), 2),
-            })
+            rows.append(
+                {
+                    "stage": stage,
+                    "region": rng.choice(REGIONS),
+                    "product": rng.choice(PRODUCTS),
+                    "agent": rng.choice(AGENTS),
+                    "value": round(float(rng.uniform(500, 15000)), 2),
+                }
+            )
     df = pd.DataFrame(rows)
     df["stage"] = pd.Categorical(df["stage"], categories=STAGE_ORDER, ordered=True)
     return df.sort_values("stage").reset_index(drop=True)
@@ -69,15 +71,9 @@ raw = load_data()
 with st.sidebar:
     st.header("Filters")
 
-    selected_regions = st.multiselect(
-        "Region", options=REGIONS, default=REGIONS
-    )
-    selected_products = st.multiselect(
-        "Product", options=PRODUCTS, default=PRODUCTS
-    )
-    selected_agents = st.multiselect(
-        "Agent", options=AGENTS, default=AGENTS
-    )
+    selected_regions = st.multiselect("Region", options=REGIONS, default=REGIONS)
+    selected_products = st.multiselect("Product", options=PRODUCTS, default=PRODUCTS)
+    selected_agents = st.multiselect("Agent", options=AGENTS, default=AGENTS)
     st.divider()
     st.caption("Data refreshes every 60 seconds.")
     if USE_MOCK:
@@ -85,9 +81,9 @@ with st.sidebar:
 
 # Apply filters
 df = raw[
-    raw["region"].isin(selected_regions) &
-    raw["product"].isin(selected_products) &
-    raw["agent"].isin(selected_agents)
+    raw["region"].isin(selected_regions)
+    & raw["product"].isin(selected_products)
+    & raw["agent"].isin(selected_agents)
 ].copy()
 
 # ── Title ─────────────────────────────────────────────────────────────────────
@@ -99,11 +95,11 @@ if df.empty:
     st.stop()
 
 # ── KPIs ──────────────────────────────────────────────────────────────────────
-won_opps   = len(df[df["stage"] == "Won"])
-lost_opps  = len(df[df["stage"] == "Lost"])
-closed     = won_opps + lost_opps
-win_rate   = (won_opps / closed * 100) if closed > 0 else 0
-avg_deal   = df[df["stage"] == "Won"]["value"].mean() if won_opps > 0 else 0
+won_opps = len(df[df["stage"] == "Won"])
+lost_opps = len(df[df["stage"] == "Lost"])
+closed = won_opps + lost_opps
+win_rate = (won_opps / closed * 100) if closed > 0 else 0
+avg_deal = df[df["stage"] == "Won"]["value"].mean() if won_opps > 0 else 0
 
 k1, k2, k3, k4 = st.columns(4)
 k1.metric("Total Opportunities", f"{len(df):,}")
@@ -141,15 +137,23 @@ active_stages = [s for s in STAGE_ORDER[:-1] if s in counts]  # exclude Lost
 for i in range(len(active_stages) - 1):
     src, dst = active_stages[i], active_stages[i + 1]
     rate = (counts.get(dst, 0) / counts[src] * 100) if counts.get(src, 0) > 0 else 0
-    conversion_rows.append({"Transition": f"{src} → {dst}", "Conversion Rate": f"{rate:.1f}%", "Rate": rate})
+    conversion_rows.append(
+        {
+            "Transition": f"{src} → {dst}",
+            "Conversion Rate": f"{rate:.1f}%",
+            "Rate": rate,
+        }
+    )
 
 # Closed won rate
 if closed > 0:
-    conversion_rows.append({
-        "Transition": "Closed Won Rate (Won / Won+Lost)",
-        "Conversion Rate": f"{win_rate:.1f}%",
-        "Rate": win_rate,
-    })
+    conversion_rows.append(
+        {
+            "Transition": "Closed Won Rate (Won / Won+Lost)",
+            "Conversion Rate": f"{win_rate:.1f}%",
+            "Rate": win_rate,
+        }
+    )
 
 conv_df = pd.DataFrame(conversion_rows)
 st.dataframe(
@@ -167,18 +171,26 @@ reg_col, prod_col = st.columns(2)
 
 with reg_col:
     st.caption("Opportunities by Region")
-    region_agg = df.groupby("region").agg(
-        total_opportunities=("value", "count"),
-        total_value=("value", "sum"),
-    ).sort_values("total_opportunities", ascending=False)
+    region_agg = (
+        df.groupby("region")
+        .agg(
+            total_opportunities=("value", "count"),
+            total_value=("value", "sum"),
+        )
+        .sort_values("total_opportunities", ascending=False)
+    )
     st.bar_chart(region_agg["total_opportunities"])
 
 with prod_col:
     st.caption("Opportunities by Product")
-    product_agg = df.groupby("product").agg(
-        total_opportunities=("value", "count"),
-        total_value=("value", "sum"),
-    ).sort_values("total_opportunities", ascending=False)
+    product_agg = (
+        df.groupby("product")
+        .agg(
+            total_opportunities=("value", "count"),
+            total_value=("value", "sum"),
+        )
+        .sort_values("total_opportunities", ascending=False)
+    )
     st.bar_chart(product_agg["total_opportunities"])
 
 st.divider()
@@ -191,18 +203,13 @@ agent_agg = (
     .agg(opportunities=("value", "count"), total_value=("value", "sum"))
     .reset_index()
 )
-won_by_agent = (
-    df[df["stage"] == "Won"]
-    .groupby("agent")
-    .size()
-    .reset_index(name="won")
-)
+won_by_agent = df[df["stage"] == "Won"].groupby("agent").size().reset_index(name="won")
 agent_agg = agent_agg.merge(won_by_agent, on="agent", how="left").fillna({"won": 0})
 agent_agg["won"] = agent_agg["won"].astype(int)
 agent_agg["win_rate"] = (agent_agg["won"] / agent_agg["opportunities"] * 100).round(1)
 
 top_value = agent_agg.sort_values("total_value", ascending=False).head(10)
-top_opps  = agent_agg.sort_values("opportunities", ascending=False).head(10)
+top_opps = agent_agg.sort_values("opportunities", ascending=False).head(10)
 
 lb_left, lb_right = st.columns(2)
 with lb_left:
@@ -230,20 +237,24 @@ st.divider()
 # ── Full data table ───────────────────────────────────────────────────────────
 with st.expander("Stage Breakdown Table"):
     st.dataframe(
-        stage_agg.style.format({
-            "total_value":         "${:,.0f}",
-            "total_opportunities": "{:,}",
-        }),
+        stage_agg.style.format(
+            {
+                "total_value": "${:,.0f}",
+                "total_opportunities": "{:,}",
+            }
+        ),
         use_container_width=True,
         hide_index=True,
     )
 
 with st.expander("Agent Detail Table"):
     st.dataframe(
-        agent_agg.sort_values("total_value", ascending=False).style.format({
-            "total_value": "${:,.0f}",
-            "win_rate":    "{:.1f}%",
-        }),
+        agent_agg.sort_values("total_value", ascending=False).style.format(
+            {
+                "total_value": "${:,.0f}",
+                "win_rate": "{:.1f}%",
+            }
+        ),
         use_container_width=True,
         hide_index=True,
     )

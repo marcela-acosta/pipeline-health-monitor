@@ -60,9 +60,9 @@ locals {
   checker_image = "${local.region}-docker.pkg.dev/${local.project_id}/vm-idle-checker/checker:latest"
 
   # How often to check (cron) and idle parameters
-  check_schedule        = "*/30 * * * *"   # every 30 minutes
-  idle_threshold_minutes = "60"             # minutes of low CPU before shutdown
-  cpu_threshold_percent  = "5"             # % below which VM is considered idle
+  check_schedule         = "*/30 * * * *" # every 30 minutes
+  idle_threshold_minutes = "60"           # minutes of low CPU before shutdown
+  cpu_threshold_percent  = "5"            # % below which VM is considered idle
 }
 
 resource "google_cloud_run_v2_job" "vm_idle_checker" {
