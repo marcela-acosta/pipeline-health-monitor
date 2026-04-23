@@ -1,11 +1,14 @@
 version: 2
 
 sources:
-  - name: health_monitor_raw
-    description: Raw ingestion tables for the pipeline health monitor.
+  - name: bronze
+    description: Bronze event tables loaded in BigQuery.
     database: "{{ target.project }}"
-    schema: "{{ var('raw_dataset') }}"
+    schema: "{{ var('bronze_dataset') }}"
     tables:
-      - name: pipeline_events
-        description: Incoming event stream for pipeline run status.
-        loaded_at_field: ingested_at
+      - name: booking_events
+        description: Raw booking events from source systems.
+      - name: crm_events
+        description: Raw CRM events from source systems.
+      - name: customer_events
+        description: Raw customer events from source systems.

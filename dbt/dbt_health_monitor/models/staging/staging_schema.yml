@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_booking_events
+    description: Staging view for booking events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_crm_events
+    description: Staging view for CRM events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_customer_events
+    description: Staging view for customer events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null

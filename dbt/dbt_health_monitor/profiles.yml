@@ -5,8 +5,8 @@ dbt_health_monitor:
       type: bigquery
       method: oauth
       project: pipeline-health-mon-2026
-      dataset: analytics_dev
-      location: US
+      dataset: layer
+      location: us-central1
       threads: 4
       timeout_seconds: 300
       priority: interactive

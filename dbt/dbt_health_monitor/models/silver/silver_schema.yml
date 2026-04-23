@@ -1,22 +1,140 @@
 version: 2
 
 models:
-  - name: slv_health_events
-    description: Standardized event table for downstream marts.
+  - name: slv_booking_events
+    description: Curated booking events with standardized types, normalized text values, and latest-record deduplication by booking.
     columns:
-      - name: event_sk
+      - name: booking_event_sk
+        description: Deterministic surrogate key based on complete source row content.
         tests:
           - not_null
           - unique
-      - name: event_id
+      - name: booking_id
+        description: Booking identifier from the source system.
         tests:
           - not_null
-      - name: status
+          - unique
+      - name: customer_id
+        description: Customer identifier associated with the booking.
         tests:
           - not_null
-          - accepted_values:
-              values: ['success', 'failed', 'running']
-              quote: true
-      - name: run_duration_seconds
+      - name: booking_date
+        description: Date when the booking was created in the source.
+      - name: travel_start_date
+        description: Planned travel start date.
+      - name: travel_end_date
+        description: Planned travel end date.
+      - name: booking_status
+        description: Normalized booking status in lowercase.
+        tests:
+          - not_null
+      - name: total_amount
+        description: Total booking amount in source currency.
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: currency
+        description: Uppercase ISO-like currency code.
+      - name: destination_city
+        description: Destination city for the booking.
+      - name: destination_country
+        description: Uppercase destination country value.
+      - name: channel
+        description: Normalized booking channel in lowercase.
+      - name: created_at
+        description: Source-created timestamp parsed to TIMESTAMP.
+      - name: updated_at
+        description: Source-updated timestamp parsed to TIMESTAMP.
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_crm_events
+    description: Curated CRM events with standardized types, normalized attributes, and latest-record deduplication by opportunity.
+    columns:
+      - name: crm_event_sk
+        description: Deterministic surrogate key based on complete source row content.
+        tests:
+          - not_null
+          - unique
+      - name: opportunity_id
+        description: CRM opportunity identifier.
+        tests:
+          - not_null
+          - unique
+      - name: stage
+        description: Normalized sales stage in lowercase.
+        tests:
+          - not_null
+      - name: agent_id
+        description: Responsible sales agent identifier.
+      - name: product
+        description: Product associated with the opportunity.
+      - name: value
+        description: Opportunity value amount.
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: region
+        description: Uppercase region value.
+      - name: expected_close_date
+        description: Expected close date parsed to DATE.
+      - name: updated_at
+        description: Source-updated timestamp parsed to TIMESTAMP.
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_customer_events
+    description: Curated customer events with standardized types, normalized identity fields, and latest-record deduplication by customer.
+    columns:
+      - name: customer_event_sk
+        description: Deterministic surrogate key based on complete source row content.
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Customer identifier.
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: Customer full name.
+        tests:
+          - not_null
+      - name: email
+        description: Customer email normalized to lowercase.
+      - name: phone
+        description: Customer phone number.
+      - name: country
+        description: Uppercase country value.
+      - name: city
+        description: Customer city.
+      - name: customer_segment
+        description: Normalized customer segment in lowercase.
+      - name: loyalty_tier
+        description: Normalized loyalty tier in lowercase.
+      - name: created_at
+        description: Source-created timestamp parsed to TIMESTAMP.
+      - name: updated_at
+        description: Source-updated timestamp parsed to TIMESTAMP.
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
         tests:
           - not_null

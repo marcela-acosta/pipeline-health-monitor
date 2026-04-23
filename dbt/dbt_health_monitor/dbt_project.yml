@@ -18,6 +18,7 @@ clean-targets:
 
 vars:
   raw_dataset: "raw_health_monitor"
+  bronze_dataset: "bronze"
 
 models:
   dbt_health_monitor:
@@ -27,6 +28,10 @@ models:
 
     bronze:
       +schema: bronze
+      +materialized: view
+
+    staging:
+      +schema: silver
       +materialized: view
 
     silver:
