@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: Bronze event tables loaded in BigQuery.
+    database: "{{ target.project }}"
+    schema: "{{ var('bronze_dataset') }}"
+    tables:
+      - name: booking_events
+        description: Raw booking events from source systems.
+      - name: crm_events
+        description: Raw CRM events from source systems.
+      - name: customer_events
+        description: Raw customer events from source systems.
