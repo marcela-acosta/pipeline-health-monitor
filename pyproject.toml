@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "pipeline-health-monitor"
+version = "0.1.0"
+description = "Pipeline health monitoring with Airflow, dbt, Beam and Streamlit"
+authors = []
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# Ingestion
+apache-beam = {version = "^2.62", extras = ["gcp"]}
+
+# Google Cloud
+google-cloud-pubsub = "^2.37"
+google-cloud-compute = "^1.47"
+google-cloud-monitoring = "^2.30"
+google-cloud-bigquery = "^3.41"
+
+# Orchestration
+apache-airflow = {version = "^3.2", extras = ["google"]}
+
+# Transformation
+dbt-bigquery = "^1.11"
+
+# Dashboard
+streamlit = "^1.56"
+
+# Data processing
+pandas = "^2.3"
+numpy = "^2.4"
+
+# Utils
+certifi = "*"
+python-dotenv = "^1.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+ruff = "^0.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
