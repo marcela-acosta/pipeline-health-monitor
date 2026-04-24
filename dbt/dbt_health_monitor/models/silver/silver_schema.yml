@@ -138,3 +138,171 @@ models:
         description: Timestamp when the row was transformed in the staging layer.
         tests:
           - not_null
+
+  - name: slv_cancellation_events
+    description: Curated cancellation events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: cancellation_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged cancellation event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_flight_events
+    description: Curated flight events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: flight_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged flight event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_hotel_events
+    description: Curated hotel events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: hotel_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged hotel event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_marketing_events
+    description: Curated marketing events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: marketing_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged marketing event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_payment_events
+    description: Curated payment events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: payment_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged payment event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_review_events
+    description: Curated review events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: review_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged review event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_search_events
+    description: Curated search events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: search_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged search event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
+
+  - name: slv_support_events
+    description: Curated support events with stable surrogate keys and deduplicated latest records.
+    columns:
+      - name: support_event_sk
+        description: Deterministic surrogate key generated from the full source row payload.
+        tests:
+          - not_null
+          - unique
+      - name: event_payload
+        description: JSON payload snapshot of the staged support event.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: Ingestion timestamp from bronze.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the row was transformed in the staging layer.
+        tests:
+          - not_null
