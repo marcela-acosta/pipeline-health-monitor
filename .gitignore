@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+beam-venv/
+venv/
+
+# Logs
+*.log
+
+# Secrets
+key.json
+*.json
+
+# System files
+.bash*
+.ssh/
+.cache/
+.config/
