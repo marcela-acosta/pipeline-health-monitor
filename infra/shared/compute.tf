@@ -12,7 +12,7 @@ data "google_compute_default_service_account" "default" {}
 
 resource "google_compute_instance" "shared_vm" {
   name         = "team-vm"
-  machine_type = "e2-medium"
+  machine_type = "e2-standard-8"
   zone         = local.zone
 
   boot_disk {
@@ -36,9 +36,8 @@ resource "google_compute_instance" "shared_vm" {
 
   metadata = {
     enable-oslogin = "TRUE"
+    startup-script = file("${path.module}/../../scripts/startup.sh")
   }
-
-  metadata_startup_script = file("${path.module}/../../scripts/startup.sh")
 }
 
 # Grant the VM's default service account read access to the GitHub deploy key secret.
