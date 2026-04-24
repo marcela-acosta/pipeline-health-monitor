@@ -36,3 +36,99 @@ models:
         description: Timestamp when the staging transformation was evaluated.
         tests:
           - not_null
+
+  - name: stg_cancellation_events
+    description: Staging view for cancellation events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_flight_events
+    description: Staging view for flight events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_hotel_events
+    description: Staging view for hotel events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_marketing_events
+    description: Staging view for marketing events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_payment_events
+    description: Staging view for payment events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_review_events
+    description: Staging view for review events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_search_events
+    description: Staging view for search events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null
+
+  - name: stg_support_events
+    description: Staging view for support events loaded from the bronze dataset.
+    columns:
+      - name: row_hash
+        description: Row hash generated from the full source record.
+        tests:
+          - not_null
+      - name: staged_at
+        description: Timestamp when the staging transformation was evaluated.
+        tests:
+          - not_null

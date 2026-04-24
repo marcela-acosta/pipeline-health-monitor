@@ -8,7 +8,23 @@ sources:
     tables:
       - name: booking_events
         description: Raw booking events from source systems.
+      - name: cancellation_events
+        description: Raw cancellation events from source systems.
       - name: crm_events
         description: Raw CRM events from source systems.
       - name: customer_events
         description: Raw customer events from source systems.
+      - name: flight_events
+        description: Raw flight events from source systems.
+      - name: hotel_events
+        description: Raw hotel events from source systems.
+      - name: marketing_events
+        description: Raw marketing events from source systems.
+      - name: payment_events
+        description: Raw payment events from source systems.
+      - name: review_events
+        description: Raw review events from source systems.
+      - name: search_events
+        description: Raw search events from source systems.
+      - name: support_events
+        description: Raw support events from source systems.
