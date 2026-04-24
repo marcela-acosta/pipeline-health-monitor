@@ -7,7 +7,7 @@ readme = "README.md"
 packages = []
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.14"
 
 # Ingestion
 apache-beam = {version = "^2.62", extras = ["gcp"]}
